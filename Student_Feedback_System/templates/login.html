@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="glass-card login-card">
+    <span class="eyebrow">{{ role|upper }} PORTAL</span>
+    <h1>{{ role|title }} Login</h1>
+    <p>Enter your login details to continue.</p>
+
+    <form method="POST">
+        <label>Username</label>
+        <input type="text" name="username" required autocomplete="username">
+
+        <label>Password</label>
+        <input type="password" name="password" required autocomplete="current-password">
+
+        <button class="btn full" type="submit">Login Securely →</button>
+    </form>
+    <a class="backlink" href="{{ url_for('home') }}">← Back to Home</a>
+</section>
+{% endblock %}

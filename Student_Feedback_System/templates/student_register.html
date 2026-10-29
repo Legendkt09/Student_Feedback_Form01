@@ -1,0 +1,18 @@
+
+{% extends "base.html" %}
+{% block content %}
+<main class="narrow">
+<section class="card">
+  <span class="eyebrow">STUDENT REGISTRATION</span>
+  <h1>Create Student Account</h1>
+  <p>Student name is not collected in the feedback form. Register using PRN/Roll Number.</p>
+  <form method="POST">
+    <label>PRN / Roll Number<input name="prn" required maxlength="50"></label>
+    <label>Create Password<input type="password" name="password" required minlength="8"></label>
+    <label>Confirm Password<input type="password" name="confirm_password" required minlength="8"></label>
+    <button class="button" type="submit">Register →</button>
+  </form>
+  <p><a href="{{ url_for('login', role='student') }}">Already registered? Login</a></p>
+</section>
+</main>
+{% endblock %}

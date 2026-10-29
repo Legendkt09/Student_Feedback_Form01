@@ -1,0 +1,98 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="glass-card admin-card">
+    {% if edit_mode %}
+    <h1>Edit Feedback Record</h1>
+    <p>Academic Year: {{ year }}</p>
+    <form method="POST">
+        {% for header in headers %}
+            {% set idx = loop.index0 %}
+            <label>{{ header }}</label>
+            {% if header == "Submitted At" %}
+                <input value="{{ record[idx] or '' }}" disabled>
+            {% elif header in questions|default([]) %}
+                <select name="col_{{ idx + 1 }}" required>
+                    {% for option in options %}
+                    <option value="{{ option }}"
+                      {% if record[idx] == option %}selected{% endif %}>
+                      {{ option }}
+                    </option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <input name="col_{{ idx + 1 }}" value="{{ record[idx] or '' }}" required>
+            {% endif %}
+        {% endfor %}
+        <button class="btn" type="submit">Save Changes</button>
+        <a class="btn btn-light"
+           href="{{ url_for('admin_dashboard', year=year) }}">Cancel</a>
+    </form>
+    {% else %}
+    <span class="eyebrow">ADMINISTRATION</span>
+    <h1>Feedback Dashboard</h1>
+    <p>Feedback records are visible only after administrator login.</p>
+
+    <form method="GET" class="filter-form">
+        <label for="year">Filter Academic Year</label>
+        <select name="year" id="year">
+            <option value="">All Academic Years</option>
+            {% for y in years %}
+            <option value="{{ y }}"
+              {% if selected_year == y %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn" type="submit">Filter</button>
+    </form>
+
+    <div class="download-list">
+        {% for y in years %}
+        <a class="btn btn-light"
+           href="{{ url_for('download_excel', year=y) }}">
+           Download {{ y }} Excel
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Academic Year</th>
+                    <th>Submitted At</th>
+                    <th>PRN</th>
+                    <th>Roll Number</th>
+                    <th>Study Year</th>
+                    <th>Semester</th>
+                    <th>Department</th>
+                    <th>Subject</th>
+                    <th>Faculty</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in records %}
+                {% set v = item.values %}
+                <tr>
+                    <td>{{ item.year }}</td>
+                    <td>{{ v[0] }}</td>
+                    <td>{{ v[2] }}</td>
+                    <td>{{ v[3] }}</td>
+                    <td>{{ v[4] }}</td>
+                    <td>{{ v[5] }}</td>
+                    <td>{{ v[6] }}</td>
+                    <td>{{ v[7] }}</td>
+                    <td>{{ v[8] }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_record', year=item.year, row_number=item.row_number) }}">Edit</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="10">No feedback records found for this selection.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

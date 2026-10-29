@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="form-page">
+
+    <h2>Semester</h2>
+
+    <p class="subtitle">
+        Select Semester
+    </p>
+
+    <form method="POST">
+
+        {% for semester in semesters %}
+
+        <label class="option-card">
+
+            <input
+                type="radio"
+                name="semester"
+                value="{{ semester }}"
+                required
+            >
+
+            <span>
+                Semester {{ semester }}
+            </span>
+
+        </label>
+
+        {% endfor %}
+
+        <div class="button-row">
+
+            <a
+                href="{{ url_for('academic') }}"
+                class="back-button">
+                ← Back
+            </a>
+
+            <button
+                type="submit"
+                class="next-button">
+                Next →
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

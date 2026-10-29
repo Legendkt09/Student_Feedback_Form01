@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+{% block content %}
+<main class="container">
+  <span class="eyebrow">ADMIN CONTROL CENTER</span>
+  <h1>Admin Dashboard</h1>
+  <p>Manage student accounts and submitted feedback.</p>
+  <section class="cards">
+    <article class="card"><div class="emoji">📊</div><h2>{{ total_feedback }}</h2><p>Total Feedback Records</p></article>
+    <article class="card"><div class="emoji">🎓</div><h2>{{ total_students }}</h2><p>Registered Student Accounts</p></article>
+    <article class="card"><div class="emoji">📚</div><h2>{{ total_subjects }}</h2><p>Subjects With Feedback</p></article>
+  </section>
+  <section class="cards">
+    <article class="card"><h2>Feedback Records</h2><p>Search, review and edit ratings.</p><a class="button" href="{{ url_for('admin_records') }}">Open Records →</a></article>
+    <article class="card"><h2>Excel Report</h2><p>Download all submitted feedback.</p><a class="button" href="{{ url_for('admin_download') }}">Download Excel ↓</a></article>
+    <article class="card"><h2>Student Accounts</h2><p>Add or delete student accounts.</p><a class="button" href="{{ url_for('admin_students') }}">Manage Students →</a></article>
+  </section>
+</main>
+{% endblock %}

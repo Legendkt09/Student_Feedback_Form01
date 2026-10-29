@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+    <h1>Feedback Records</h1>
+    <div>
+        <a class="btn secondary" href="{{ url_for('download_excel') }}">Download Excel</a>
+        <a class="btn" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</header>
+
+<main class="container wide">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="message {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <section class="card">
+        <h2>All Feedback</h2>
+        <p>Record edit karanyasathi row madhil fields badlun Update Record click kara.</p>
+
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Excel Row</th>
+                        {% for header in headers %}
+                            <th>{{ header }}</th>
+                        {% endfor %}
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for record in records %}
+                    {% set row_number = loop.index + 1 %}
+                    <tr>
+                        <form method="POST">
+                            <td>
+                                {{ row_number }}
+                                <input type="hidden" name="row_number" value="{{ row_number }}">
+                            </td>
+
+                            {% for header in headers %}
+                                {% set value = record[loop.index0] %}
+                                <td>
+                                    {% if header in ["Date", "Time"] %}
+                                        {{ value if value is not none else "" }}
+                                    {% elif header in question_headers %}
+                                        <select name="field_{{ header }}">
+                                            {% for rating_value, rating_label in ratings.items() %}
+                                                <option value="{{ rating_value }}"
+                                                {% if value|string == rating_value %}selected{% endif %}>
+                                                    {{ rating_value }} - {{ rating_label }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% elif header == "Academic Year" %}
+                                        <select name="field_{{ header }}">
+                                            {% for item in academic_years %}
+                                                <option value="{{ item }}"
+                                                {% if value == item %}selected{% endif %}>
+                                                    {{ item }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% elif header == "Study Year" %}
+                                        <select name="field_{{ header }}">
+                                            {% for item in study_years %}
+                                                <option value="{{ item }}"
+                                                {% if value == item %}selected{% endif %}>
+                                                    {{ item }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% elif header == "Semester" %}
+                                        <select name="field_{{ header }}">
+                                            {% for item in semesters %}
+                                                <option value="{{ item }}"
+                                                {% if value == item %}selected{% endif %}>
+                                                    {{ item }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% elif header == "Subject" %}
+                                        <select name="field_{{ header }}">
+                                            {% for item in subjects %}
+                                                <option value="{{ item }}"
+                                                {% if value == item %}selected{% endif %}>
+                                                    {{ item }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <input name="field_{{ header }}"
+                                               value="{{ value if value is not none else '' }}"
+                                               {% if header in ["Date", "Time"] %}disabled{% endif %}>
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+
+                            <td>
+                                <button class="btn small" type="submit">Update</button>
+                            </td>
+                        </form>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="{{ headers|length + 2 }}">No feedback records available.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,78 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="glass-card form-card">
+    {% if review %}
+        <div class="step-label">FINAL REVIEW</div>
+        <h1>Review Your Feedback</h1>
+        <p>Please check your answers before submitting.</p>
+
+        <div class="review-list">
+            {% for field in [
+                ('Academic Year', 'academic_year'),
+                ('PRN', 'prn'),
+                ('Roll Number', 'roll_number'),
+                ('Study Year', 'study_year'),
+                ('Semester', 'semester'),
+                ('Department', 'department'),
+                ('Subject', 'subject'),
+                ('Faculty Name', 'faculty')
+            ] %}
+            <p><strong>{{ field[0] }}:</strong> {{ data.get(field[1], '') }}</p>
+            {% endfor %}
+
+            {% for q in questions %}
+            <p><strong>{{ loop.index }}. {{ q }}</strong><br>
+                {{ answers[loop.index0] }}</p>
+            {% endfor %}
+        </div>
+
+        <form method="POST">
+            <button class="btn" type="submit">Submit Feedback ✓</button>
+            <a class="btn btn-light"
+               href="{{ url_for('feedback_question', number=total-1) }}">← Back</a>
+        </form>
+    {% else %}
+        <div class="step-label">QUESTION {{ number + 1 }} OF {{ total }}</div>
+        <h1>Faculty Feedback</h1>
+        <div class="progress">
+            <div style="width: {{ ((number + 1) / total) * 100 }}%"></div>
+        </div>
+
+        <div class="question-box">
+            <span class="question-number">QUESTION {{ number + 1 }}</span>
+            <h2>{{ question }}</h2>
+        </div>
+
+        {% if error %}
+        <div class="alert error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <label for="answer">Choose your answer</label>
+            <select id="answer" name="answer" required>
+                <option value="">Choose one option</option>
+                {% for option in options %}
+                <option value="{{ option }}"
+                    {% if selected == option %}selected{% endif %}>
+                    {{ option }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <div class="actions">
+                {% if number > 0 %}
+                <a class="btn btn-light"
+                   href="{{ url_for('feedback_question', number=number-1) }}">← Back</a>
+                {% else %}
+                <a class="btn btn-light"
+                   href="{{ url_for('feedback_detail', step=7) }}">← Details</a>
+                {% endif %}
+                <button class="btn" type="submit">
+                    {% if number + 1 == total %}Review Feedback →{% else %}Next Question →{% endif %}
+                </button>
+            </div>
+        </form>
+    {% endif %}
+</section>
+{% endblock %}

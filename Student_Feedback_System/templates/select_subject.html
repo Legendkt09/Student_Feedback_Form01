@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+{% block content %}
+<main class="narrow">
+<section class="card">
+  <span class="eyebrow">STEP 1</span><h1>Select Subject Details</h1>
+  <form method="POST">
+    <label>Academic Year
+      <select name="academic_year" required>
+        <option value="">Select Academic Year</option>
+        {% for item in academic_years %}<option>{{ item }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Study Year
+      <select name="study_year" required>
+        <option value="">Select Study Year</option>
+        {% for item in study_years %}<option>{{ item }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Semester
+      <select name="semester" required>
+        <option value="">Select Semester</option>
+        {% for item in semesters %}<option value="{{ item }}">Semester {{ item }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Subject
+      <select name="subject" required>
+        <option value="">Select Subject</option>
+        {% for item in subjects %}<option value="{{ item }}">{{ item }}</option>{% endfor %}
+      </select>
+    </label>
+    <button class="button" type="submit">Continue to Questions →</button>
+  </form>
+</section>
+</main>
+{% endblock %}

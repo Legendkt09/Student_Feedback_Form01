@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="form-page">
+
+    <h2>Roll Number</h2>
+
+    <p class="subtitle">
+        Enter Roll Number
+    </p>
+
+    <form method="POST">
+
+        <label>
+            Roll Number
+        </label>
+
+        <input
+            type="text"
+            name="roll_no"
+            placeholder="Enter Roll Number"
+            required
+        >
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+        <div class="button-row">
+
+            <a
+                href="{{ url_for('prn') }}"
+                class="back-button">
+                ← Back
+            </a>
+
+            <button
+                type="submit"
+                class="next-button">
+                Start Feedback →
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

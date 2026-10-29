@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="form-page">
+
+    <h2>Subject</h2>
+
+    <p class="subtitle">
+        Select Subject
+    </p>
+
+    <form method="POST">
+
+        {% for subject in subjects %}
+
+        <label class="option-card">
+
+            <input
+                type="radio"
+                name="subject"
+                value="{{ subject }}"
+                required
+            >
+
+            <span>
+                {{ subject }}
+            </span>
+
+        </label>
+
+        {% endfor %}
+
+        <div class="button-row">
+
+            <a
+                href="{{ url_for('year') }}"
+                class="back-button">
+                ← Back
+            </a>
+
+            <button
+                type="submit"
+                class="next-button">
+                Next →
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

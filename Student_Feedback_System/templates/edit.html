@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+    <h1>Edit Feedback Ratings</h1>
+    <p>Submission ID: {{ record.data.get("Submission ID") }}</p>
+
+    <form method="post">
+        {% for question in questions %}
+        <label>{{ loop.index }}. {{ question }}</label>
+        <select name="q{{ loop.index }}" required>
+            {% for value in range(1, 6) %}
+            <option value="{{ value }}"
+                {% if ratings[loop.index0]|int == value %}selected{% endif %}>
+                {{ value }} / 5
+            </option>
+            {% endfor %}
+        </select>
+        {% endfor %}
+
+        <button class="btn" type="submit">Save Changes</button>
+        <a class="btn secondary" href="{{ url_for('admin_dashboard') }}">Cancel</a>
+    </form>
+</section>
+{% endblock %}

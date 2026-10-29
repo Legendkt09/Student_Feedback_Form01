@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="form-page">
+
+    <h2>PRN Number</h2>
+
+    <p class="subtitle">
+        Enter PRN Number — Maximum 10 digits
+    </p>
+
+    <form method="POST">
+
+        <label>
+            PRN Number
+        </label>
+
+        <input
+            type="text"
+            name="student_prn"
+            placeholder="Enter PRN Number"
+            maxlength="10"
+            pattern="[0-9]{1,10}"
+            inputmode="numeric"
+            required
+        >
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+        <div class="button-row">
+
+            <a
+                href="{{ url_for('faculty') }}"
+                class="back-button">
+                ← Back
+            </a>
+
+            <button
+                type="submit"
+                class="next-button">
+                Next →
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

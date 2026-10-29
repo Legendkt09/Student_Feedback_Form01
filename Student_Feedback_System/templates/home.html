@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="hero glass-card">
+    <div class="hero-text">
+        <span class="eyebrow">ACADEMIC FEEDBACK PORTAL</span>
+        <h1>Better Teaching.<br>Better Learning.</h1>
+        <p>Share your academic feedback through a secure step-by-step process.</p>
+        <div class="actions">
+            <a class="btn" href="{{ url_for('login', role='student') }}">Student Login →</a>
+            <a class="btn btn-light" href="{{ url_for('login', role='admin') }}">Admin Login →</a>
+        </div>
+    </div>
+    <div class="hero-panel">
+        <img src="{{ url_for('static', filename='college_logo.png') }}"
+             class="hero-logo" alt="College Logo">
+        <h2>{{ college_name }}</h2>
+        <p>{{ college_subtitle }}</p>
+        <p class="small">Student Faculty Feedback System</p>
+    </div>
+</section>
+{% endblock %}

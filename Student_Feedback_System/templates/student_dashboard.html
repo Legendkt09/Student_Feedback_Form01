@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+{% block content %}
+<main class="container">
+  <span class="eyebrow">STUDENT WORKSPACE</span>
+  <h1>Welcome, Student!</h1>
+  <p>PRN / Roll Number: <strong>{{ session.get('username') }}</strong></p>
+  <section class="cards">
+    <article class="card"><div class="emoji">📚</div><h2>Subject Feedback</h2><p>Select academic year, study year, semester and subject.</p></article>
+    <article class="card"><div class="emoji">📝</div><h2>Seven Questions</h2><p>Answer one question on each separate page.</p></article>
+    <article class="card"><div class="emoji">🔒</div><h2>Privacy</h2><p>Only Admin can view submitted feedback and Excel records.</p></article>
+  </section>
+  <section class="card center">
+    <h2>Ready to give feedback?</h2>
+    <p>Please answer all questions honestly.</p>
+    <a class="button" href="{{ url_for('select_subject') }}">Start Feedback →</a>
+  </section>
+</main>
+{% endblock %}

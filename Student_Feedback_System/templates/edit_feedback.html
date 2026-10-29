@@ -1,0 +1,26 @@
+
+{% extends "base.html" %}
+{% block content %}
+<main class="narrow">
+<section class="card">
+  <h1>Edit Feedback Ratings</h1>
+  <p>PRN: {{ record.prn }} · Subject: {{ record.subject }}</p>
+  <form method="POST">
+    {% for question in questions %}
+    {% set field = 'q' ~ loop.index %}
+    <label>{{ loop.index }}. {{ question }}
+      <select name="{{ field }}" required>
+        {% for value, label in ratings.items() %}
+        <option value="{{ value }}" {% if record[field] == value %}selected{% endif %}>
+          {{ value }} - {{ label }}
+        </option>
+        {% endfor %}
+      </select>
+    </label>
+    {% endfor %}
+    <button class="button" type="submit">Save Changes</button>
+    <a class="button outline" href="{{ url_for('admin_records') }}">Cancel</a>
+  </form>
+</section>
+</main>
+{% endblock %}

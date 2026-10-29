@@ -1,0 +1,60 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ title }} | Feedback Portal{% endblock %}
+{% block body_class %}selection-page{% endblock %}
+
+{% block content %}
+<section class="form-card">
+    <div class="step-heading">
+        <span>STEP {{ page_number }} OF {{ total_steps }}</span>
+        <span>{{ ((page_number / total_steps) * 100)|round|int }}%</span>
+    </div>
+
+    <div class="progress-track">
+        <div class="progress-fill"
+             style="width: {{ (page_number / total_steps) * 100 }}%"></div>
+    </div>
+
+    <h1 class="page-title">{{ title }}</h1>
+    <p class="page-description">
+        {% if input_mode %}
+            Enter your details below to continue.
+        {% else %}
+            Choose one option below to continue.
+        {% endif %}
+    </p>
+
+    <form method="post" class="choice-form">
+        {% if input_mode %}
+            <label class="field-label" for="{{ field_name }}">{{ title }}</label>
+            <input
+                class="text-input"
+                id="{{ field_name }}"
+                name="{{ field_name }}"
+                type="text"
+                placeholder="{{ placeholder }}"
+                required
+                autocomplete="off">
+        {% else %}
+            <div class="options-list">
+                {% for option in options %}
+                    <label class="option-card">
+                        <input type="radio" name="{{ field_name }}"
+                               value="{{ option }}" required>
+                        <span class="custom-radio"></span>
+                        <span class="option-text">{{ option }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="form-actions">
+            <a class="secondary-button" href="{{ back_url }}">← Back</a>
+            <button class="primary-button" type="submit">
+                Next Step <span>→</span>
+            </button>
+        </div>
+    </form>
+</section>
+{% endblock %}

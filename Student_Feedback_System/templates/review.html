@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+    <h1>Review Your Feedback</h1>
+    <p>Check your ratings before submitting.</p>
+
+    <h3>Academic Details</h3>
+    <p>Academic Year: {{ feedback.academic_year }}</p>
+    <p>PRN: {{ feedback.prn }}</p>
+    <p>Roll Number: {{ feedback.roll_number }}</p>
+    <p>Study Year: {{ feedback.study_year }}</p>
+    <p>Semester: {{ feedback.semester }}</p>
+    <p>Department: {{ feedback.department }}</p>
+    <p>Subject: {{ feedback.subject }}</p>
+    <p>Faculty: {{ feedback.faculty_name }}</p>
+
+    <h3>Question Ratings</h3>
+    <ol>
+        {% for question in questions %}
+        <li>{{ question }} — <strong>{{ answers[(loop.index|string)] }}/5</strong></li>
+        {% endfor %}
+    </ol>
+
+    <form method="post">
+        <button class="btn" type="submit">Submit Feedback ✓</button>
+        <a class="btn secondary" href="{{ url_for('feedback_question', number=questions|length) }}">Go Back</a>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+{% block content %}
+<main>
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">WELCOME TO OUR COLLEGE</span>
+    <h1>Student Faculty<br><span>Feedback System</span></h1>
+    <p>Your feedback helps us improve teaching quality and create a better learning experience for every student.</p>
+    <div class="features">
+      <span>✓ Simple &amp; Secure</span>
+      <span>✦ Student Friendly</span>
+      <span>↗ Quick Submission</span>
+    </div>
+    <div class="actions">
+      <a class="button" href="{{ url_for('login', role='student') }}">Student Login →</a>
+      <a class="button outline" href="{{ url_for('login', role='admin') }}">Admin Login →</a>
+    </div>
+  </div>
+  <div class="visual">
+    <div class="photo">
+      <img src="{{ url_for('static', filename='images/' + college_photo) }}"
+           alt="College building" onerror="this.style.display='none'">
+      <div class="photo-caption"><small>OUR INSTITUTION</small><h2>Learn. Improve. Excel.</h2></div>
+    </div>
+    <div class="float-card one">✦ Student Feedback</div>
+    <div class="float-card two">✓ Secure Portal</div>
+  </div>
+</section>
+<section class="cards">
+  <article class="card">
+    <div class="emoji">🎓</div><h2>Student Portal</h2>
+    <p>Login using your registered PRN and password to submit feedback.</p>
+    <a href="{{ url_for('login', role='student') }}">Continue as Student →</a>
+    <p><a href="{{ url_for('student_register') }}">Create Student Account</a></p>
+  </article>
+  <article class="card">
+    <div class="emoji">🛡️</div><h2>Admin Portal</h2>
+    <p>View feedback records, manage student accounts and export Excel reports.</p>
+    <a href="{{ url_for('login', role='admin') }}">Continue as Admin →</a>
+  </article>
+</section>
+</main>
+{% endblock %}

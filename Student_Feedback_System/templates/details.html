@@ -1,0 +1,53 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="glass-card form-card">
+    <div class="step-label">DETAIL {{ step + 1 }} OF {{ total }}</div>
+    <h1>{{ field.label }}</h1>
+    <p>Complete this step to continue to the next page.</p>
+
+    <div class="progress">
+        <div style="width: {{ ((step + 1) / (total + 7)) * 100 }}%"></div>
+    </div>
+
+    {% if error %}
+    <div class="alert error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <label for="detail">{{ field.label }}</label>
+
+        {% if field.type == "select" %}
+        <select id="detail" name="{{ field.key }}" required>
+            <option value="">Choose {{ field.label }}</option>
+            {% for option in field.options %}
+            <option value="{{ option }}"
+              {% if data.get(field.key) == option %}selected{% endif %}>
+              {{ option }}
+            </option>
+            {% endfor %}
+        </select>
+        {% elif field.key == "prn" %}
+        <input id="detail" type="text" name="prn"
+               inputmode="numeric" pattern="[0-9]{10}"
+               minlength="10" maxlength="10"
+               placeholder="Enter exactly 10 digits"
+               value="{{ data.get('prn', '') }}" required>
+        {% else %}
+        <input id="detail" type="text" name="{{ field.key }}"
+               value="{{ data.get(field.key, '') }}" required>
+        {% endif %}
+
+        <div class="actions">
+            {% if step > 0 %}
+            <a class="btn btn-light"
+               href="{{ url_for('feedback_detail', step=step-1) }}">← Back</a>
+            {% endif %}
+            <button class="btn" type="submit">
+                {% if step + 1 == total %}Next: Questions →{% else %}Next →{% endif %}
+            </button>
+            <a class="btn btn-muted" href="{{ url_for('logout') }}">Cancel</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

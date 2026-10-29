@@ -1,0 +1,11 @@
+
+{% extends "base.html" %}
+{% block content %}
+<section class="glass-card success-card">
+    <div class="success-icon">✓</div>
+    <span class="eyebrow">SUBMISSION COMPLETE</span>
+    <h1>Feedback Successfully Submitted!</h1>
+    <p>Thank you for helping us improve teaching and learning.</p>
+    <a class="btn" href="{{ url_for('logout') }}">Finish →</a>
+</section>
+{% endblock %}

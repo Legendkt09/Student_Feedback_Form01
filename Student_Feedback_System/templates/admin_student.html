@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+{% block content %}
+<main class="container">
+  <h1>Manage Student Accounts</h1>
+  <section class="card">
+    <h2>Add Student</h2>
+    <form method="POST">
+      <label>PRN / Roll Number<input name="prn" required></label>
+      <label>Temporary Password<input type="password" name="password" required minlength="8"></label>
+      <button class="button" type="submit">Add Student</button>
+    </form>
+  </section>
+  <section class="card">
+    <h2>Registered Students</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>PRN / Roll Number</th><th>Created At</th><th>Action</th></tr></thead>
+      <tbody>
+      {% for student in students %}
+      <tr>
+        <td>{{ student.prn }}</td><td>{{ student.created_at }}</td>
+        <td><form method="POST" action="{{ url_for('delete_student', student_id=student.id) }}" onsubmit="return confirm('Delete this student account?')">
+          <button class="button danger" type="submit">Delete</button>
+        </form></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3">No registered students.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+  </section>
+</main>
+{% endblock %}
